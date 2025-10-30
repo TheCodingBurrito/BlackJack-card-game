@@ -1,0 +1,69 @@
+from art import logo
+print(logo)
+
+import random
+cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
+dealer = 0
+user = 0
+game_over = False
+
+for item in range(2):
+    dealer += random.choice(cards)
+    user += random.choice(cards)
+print(f"The dealer has a {dealer}.")
+check = input(f"You have {user} would you like to hit or stand? \n")
+
+
+def add_card(holder):
+    holder += random.choice(cards)
+    return holder
+
+
+def black_check(a, b):
+    if a == 21 and b == 21:
+        print("Its a draw!")
+        game_over = True
+    if a == 21:
+        print("you win with a blackjack!")
+        game_over = True
+    elif b == 21:
+        print("Dealer has blackjack")
+        game_over = True
+    elif a == b:
+        print("Its a draw!")
+        game_over = True
+
+
+black_check(user, dealer)
+
+while user < 21 and check != "stand":
+    if check == "hit":
+        user = add_card(user)
+        check_again = input(f"you have {user} would you like to hit or stand?\n")
+        # if check_again == "yes":
+        # user = add_card(user)
+        if user == 21:
+            print("You win with BlackJack")
+            game_over = True
+
+        if user > 21:
+            print(f"You busted with {user}, Dealer wins.")
+            game_over = True
+        if user < 21:
+            if check_again == "hit":
+                user = add_card(user)
+    if check_again == "stand":
+        break
+
+while dealer < 17:
+    dealer = add_card(dealer)
+if dealer == 21:
+    print("Dealer wins with Blackjack!")
+    game_over = True
+elif dealer > 21:
+    print(f"dealer busted with {dealer}, you win !")
+    game_over = True
+elif dealer > user:
+    print(f"dealer wins with {dealer}.")
+    game_over = True
+
